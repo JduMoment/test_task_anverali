@@ -15,6 +15,7 @@ from sqlalchemy.dialects import postgresql
 
 from test_task_anverali.models.roles import Role
 from test_task_anverali.models.user import UserRole, User
+from test_task_anverali.models.users_executor_settings import UserExecutorsSettings
 
 # revision identifiers, used by Alembic.
 revision: str = '227bd0f9f776'
@@ -94,6 +95,12 @@ def upgrade() -> None:
             role_id=role_id
         )
     )
+
+    op.execute(sa.insert(UserExecutorsSettings).values(
+        user_id=user_id,
+        experience='some experience',
+        about_me='some about me'
+    ))
     # ### end Alembic commands ###
 
 

@@ -39,10 +39,10 @@
               </div>
               <form class="col-sm-9" method="post" action="{{ url_for('profile.update') }}">
                 <p class="text-muted mb-0">
-                  {% if user_info.get('about') == None %} Не указано {% else %} {{ user_info.get('about')[0] }} {% endif %}
+                  {% if user_info[0] == None %} Не указано {% else %} {{ user_info[0] }} {% endif %}
                 </p>
                 <br>
-                <input type="text" name="about_me" id="AboutMe" class="form-control form-control-lg" placeholder="Напиши немного о себе" required/>
+                <input type="text" name="about" id="AboutMe" class="form-control form-control-lg" placeholder="Напиши немного о себе" required/>
                 <br>
                 <input type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info text-light btn-lg mt-2" value="Сохранить">
               </form>
