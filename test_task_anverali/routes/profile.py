@@ -8,23 +8,20 @@ profile_bp = Blueprint('profile', __name__)
 
 
 @profile_bp.route('/profile', methods=['GET'])
-@login_required
 def profile():
     user = current_user.__dict__
-    if user.get('space_type') == 'executor':
-        return render_template('executor_profile.html',
+    space_type = user.get('space_type')
+    template = f"{space_type}_profile.html"
+    try:
+        return render_template(template,
                                user=user,
-                               user_info=get_user_settings(current_user.id, current_user.space_type)), 200
-    elif user.get('space_type') == 'customer':
-        return render_template('customer_profile.html',
-                               user=user,
-                               user_info=get_user_settings(current_user.id, current_user.space_type)), 200
-    flash('Something went wrong. Please, try again.', 'danger')
-    return render_template('base.html'), 500
+                               user_info=get_user_settings(current_user.id, space_type)), 200
+    except Exception as e:
+        flash('Something went wrong. Please, try again.', 'danger')
+        return render_template('base.html'), 500
 
 
 @profile_bp.route('/profile', methods=['POST'])
-@login_required
 def change_role():
     change_space_type(current_user.id, current_user.space_type)
     return redirect(url_for('profile.profile')), 302
