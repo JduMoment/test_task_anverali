@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Кабинет исполнителя</title>
+{% endblock %}
+{% block content %}
+<div class="col-lg-8">
+<div class="ms-5 mt-5">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-3">
+        <p class="mb-0">First and last name</p>
+      </div>
+      <div class="col-sm-9">
+        <p class="text-muted mb-0">{{ user.get('first_name') }} {{ user.get('last_name') }}</p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-3">
+        <p class="mb-0">Email</p>
+      </div>
+      <div class="col-sm-9">
+        <p class="text-muted mb-0">{{ user.get('email') }}</p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-3">
+        <p class="mb-0">Phone</p>
+      </div>
+      <div class="col-sm-9">
+        <p class="text-muted mb-0">{{ user.get('phone_number') }}</p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-3">
+        <p class="mb-0">About me</p>
+      </div>
+      <div class="col-sm-9">
+        <p class="text-muted mb-0">{{ user.get('about') }}</p>
+      </div>
+    </div>
+      <hr>
+    <div class="row">
+      <div class="col-sm-3">
+        <p class="mb-0">Немного обо мне</p>
+      </div>
+      <form class="col-sm-9" method="post" action="{{ url_for('profile.update') }}">
+        <p class="text-muted mb-0">
+          {% if user_info.get('about') == None %} Не указано {% else %} {{ user_info.get('about')[0] }} {% endif %}
+        </p>
+        <br>
+        <input type="text" name="about_me" id="AboutMe" class="form-control form-control-lg" placeholder="Напиши немного о себе" required/>
+        <br>
+        <input type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info text-light btn-lg mt-2" value="Сохранить">
+      </form>
+      <div class="col-sm-3">
+        <p class="mb-0">Опыт</p>
+        <form class="col-sm-9" method="post" action="{{ url_for('profile.update') }}">
+        <p class="text-muted mb-0">
+          {% if user_info.get('expirience') == None %} Не указано {% else %} {{ user_info.get('expirience')[0] }} {% endif %}
+        </p>
+        <br>
+        <input type="text" name="about_me" id="AboutMe" class="form-control form-control-lg" placeholder="Напиши немного о себе" required/>
+        <br>
+        <input type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info text-light btn-lg mt-2" value="Сохранить">
+      </form>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
