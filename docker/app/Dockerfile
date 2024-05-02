@@ -14,4 +14,6 @@ ENV FLASK_APP=main.py
 
 EXPOSE 8080
 
-CMD ["poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=8080", "--debug"]
+RUN pip install flask
+
+CMD ["flask", "run", "--host=0.0.0.0", "--port=8080", "--debug"]
