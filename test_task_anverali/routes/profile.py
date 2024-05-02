@@ -22,7 +22,9 @@ def profile():
         try:
             return render_template(template,
                                    user=user,
-                                   user_info=get_user_settings(session, user_id=current_user.id, space_type=space_type)), 200
+                                   user_info=get_user_settings(session,
+                                                               user_id=current_user.id,
+                                                               space_type=space_type)), 200
         except Exception as error:
             logger.error('Error while getting user profile data: %s', error, exc_info=True)
             flash('Something went wrong. Please, try again.', 'danger')

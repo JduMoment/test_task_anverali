@@ -82,4 +82,3 @@ def logout():
     flask_login.logout_user()
     flash('You have logged out of your account', 'success')
     return redirect(url_for('auth.login')), 302
-

@@ -14,42 +14,11 @@ user_bp = Blueprint('users', __name__)
 
 @user_bp.route('/register', methods=['GET'])
 def show_registration_form():
-    """Display the registration form.
-    ---
-    get:
-        description: Show registration form.
-        responses:
-            200:
-                description: Render the registration template.
-    """
     return render_template('registration.html'), 200
 
 
 @user_bp.route('/register', methods=['POST'])
 def register():
-    """Registration form and processing.
-    ---
-    post:
-        description: Process registration data.
-        consumes:
-            - application/x-www-form-urlencoded
-        parameters:
-            - in: formData
-              name: email
-              type: string
-              required: true
-              description: The user's email address.
-            - in: formData
-              name: password
-              type: string
-              required: true
-              description: The user's password that must include at least one number and has a minimum length of 6 characters.
-        responses:
-            302:
-                description: Redirect to login page if registration successful.
-            400:
-                description: Render registration form with error message if registration fails.
-    """
     try:
         user_data = request.form
         schema = RegisterSchema()
@@ -69,4 +38,3 @@ def register():
         logger.error('Error during registration %s', error, exc_info=True)
         flash('Something went wrong', 'danger')
         return render_template('base.html', errors=error), 500
-

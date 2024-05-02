@@ -1,1 +1,1 @@
-from .access import AccessMixin
+from .access import AccessMixin  # noqa: F401

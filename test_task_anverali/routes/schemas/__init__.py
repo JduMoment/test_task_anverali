@@ -1,2 +1,2 @@
-from .user import RegisterSchema
-from .login import LoginSchema
+from .user import RegisterSchema    # noqa
+from .login import LoginSchema  # noqa

@@ -20,7 +20,9 @@ LOGGING_CONFIG = {
     'version': 1,
     'formatters': {
         'json': {
-            'format': '{"asctime": "%(asctime)s", "levelname": "%(levelname)s", "message": "%(message)s"}',
+            'format': '{"asctime": "%(asctime)s",'
+                      '"levelname": "%(levelname)s",'
+                      '"message": "%(message)s"}',
         },
         'raw': {'format': ''},
     },
@@ -52,7 +54,8 @@ def initialize_logging():
 
 
 def setup_sentry(node_config):
-    sentry_logging = LoggingIntegration(level=logging.INFO, event_level=logging.ERROR)
+    sentry_logging = LoggingIntegration(level=logging.INFO,
+                                        event_level=logging.ERROR)
     sentry_sdk.init(
         dsn=node_config.SENTRY_SDK_DNS,
         traces_sample_rate=1.0,

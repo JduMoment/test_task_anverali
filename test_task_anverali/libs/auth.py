@@ -13,4 +13,3 @@ def login_required_page(f):
         return f(*args, **kwargs)
 
     return decorated_function
-

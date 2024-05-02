@@ -2,8 +2,8 @@ import bcrypt
 
 from test_task_anverali.db import Session
 from test_task_anverali.models.user import User
-from test_task_anverali.models.users_customer_settings import UserCustomerSettings
-from test_task_anverali.models.users_executor_settings import UserExecutorsSettings
+from test_task_anverali.models.users_customer_settings import UserCustomerSettings  # noqa
+from test_task_anverali.models.users_executor_settings import UserExecutorsSettings  # noqa
 
 
 def add_user(db_session: Session, **kwargs):
@@ -27,12 +27,16 @@ def update_user(db_session: Session, user_id, **kwargs):
 
 
 def change_space_type(db_session: Session, user_id, space_type):
-    settings_class = UserCustomerSettings if space_type == 'executor' else UserExecutorsSettings
-    existence_check = db_session.query(settings_class.user_id).filter_by(user_id=user_id).one_or_none()
+    settings_class = UserCustomerSettings if space_type == 'executor'\
+                                          else UserExecutorsSettings
+    existence_check = (db_session.query(settings_class.user_id)
+                       .filter_by(user_id=user_id)
+                       .one_or_none())
     if existence_check is None:
         user_settings = settings_class(user_id=user_id)
         db_session.add(user_settings)
-    update_user(db_session, user_id, space_type='customer' if space_type == 'executor' else 'executor')
+    update_user(db_session, user_id, space_type='customer'
+                if space_type == 'executor' else 'executor')
 
 
 def update_custom_fields(db_session: Session, user_id, space_type, experience=None, about=None):
@@ -45,9 +49,12 @@ def update_custom_fields(db_session: Session, user_id, space_type, experience=No
 
 def get_user_settings(db_session: Session, user_id, space_type):
     if space_type == 'executor':
-        return db_session.query(UserExecutorsSettings.about_me, UserExecutorsSettings.experience).filter_by(user_id=user_id).first()
+        return (db_session.query(UserExecutorsSettings.about_me,
+                                 UserExecutorsSettings.experience)
+                .filter_by(user_id=user_id).first())
     elif space_type == 'customer':
-        return db_session.query(UserCustomerSettings.about_me).filter_by(user_id=user_id).first()
+        return (db_session.query(UserCustomerSettings.about_me)
+                .filter_by(user_id=user_id).first())
 
 
 def register_user(db_session, user_data):

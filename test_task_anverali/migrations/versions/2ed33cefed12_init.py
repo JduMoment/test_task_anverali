@@ -1,7 +1,7 @@
 """init
 
 Revision ID: 2ed33cefed12
-Revises: 
+Revises:
 Create Date: 2024-05-01 10:36:22.996704
 
 """
@@ -12,7 +12,8 @@ import sqlalchemy as sa
 from sqlalchemy import orm
 from sqlalchemy.dialects import postgresql
 
-from test_task_anverali.models import User, Role, UserRole, UserExecutorsSettings
+from test_task_anverali.models import (User, Role, UserRole,
+                                       UserExecutorsSettings)
 
 # revision identifiers, used by Alembic.
 revision: str = '2ed33cefed12'
@@ -61,7 +62,7 @@ def upgrade() -> None:
     sa.UniqueConstraint('user_id')
     )
     op.create_table('user_roles',
-    sa.Column('id', sa.BigInteger(), autoincrement=True, nullable=False),
+                    sa.Column('id', sa.BigInteger(), autoincrement=True, nullable=False),
     sa.Column('user_id', sa.BigInteger(), nullable=False),
     sa.Column('role_id', sa.BigInteger(), nullable=False),
     sa.ForeignKeyConstraint(['role_id'], ['roles.id'], ondelete='CASCADE'),
@@ -121,5 +122,3 @@ def downgrade() -> None:
         """
     )
     # ### end Alembic commands ###
-
-

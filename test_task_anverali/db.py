@@ -21,7 +21,7 @@ def db_session():
     try:
         yield session
         session.commit()
-    except:
+    except:  # noqa: E722
         session.rollback()
         raise
     finally:

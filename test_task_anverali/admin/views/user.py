@@ -13,4 +13,3 @@ class UserView(AccessMixin, ModelView):
             name='User Settings',
             category='User Data'
         )
-

@@ -1,4 +1,4 @@
-from flask import redirect, render_template, abort
+from flask import redirect, abort
 from flask_admin import BaseView
 from flask_login import current_user
 

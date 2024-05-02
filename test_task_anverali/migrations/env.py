@@ -8,7 +8,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from test_task_anverali.db import ModelBase
-from test_task_anverali.models import *
+from test_task_anverali.models import *  # noqa
 from dotenv import load_dotenv
 
 load_dotenv()

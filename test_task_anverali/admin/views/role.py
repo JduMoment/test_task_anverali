@@ -27,4 +27,3 @@ class UserRoleView(AccessMixin, ModelView):
             name='UserRole Settings',
             category='User Data'
         )
-
