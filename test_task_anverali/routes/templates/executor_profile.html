@@ -33,7 +33,7 @@
       </div>
     </div>
     <hr>
-      <form class="col-sm-9" method="post" action="{{ url_for('profile.update') }}">
+      <form class="col-sm-9" method="post" action="{{ url_for('profile.update_profile') }}">
         <p class="text-muted mb-0">
           {% if user_info[0] == None %} Не указано {% else %} {{ user_info[0] }} {% endif %}
         </p>

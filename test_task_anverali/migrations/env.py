@@ -8,9 +8,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from test_task_anverali.db import ModelBase
-from test_task_anverali.models.user import User
-from test_task_anverali.models.roles import Role
-from test_task_anverali.models.users_customer_settings import UserCustomerSettings
+from test_task_anverali.models import *
 from dotenv import load_dotenv
 
 load_dotenv()

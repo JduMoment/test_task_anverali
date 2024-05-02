@@ -13,6 +13,4 @@ class Role(ModelBase):
     users = relationship('UserRole', back_populates='role')
 
     def __str__(self):
-        return self.role
-
-    __table_args__ = (Index('index_id_role', id),)
+        return self.name

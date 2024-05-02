@@ -12,4 +12,4 @@ class BaseConfig:
     SENTRY_SDK_DNS = os.environ.get('SENTRY_SDK_DNS')
 
     OPEN_SEARCH_ENABLED = os.environ.get('OPEN_SEARCH_ENABLED') == 'True'
-    OPEN_SEARCH_URL = os.environ.get('OPEN_SEARCH_URLz')
+    OPEN_SEARCH_URL = os.environ.get('OPEN_SEARCH_URL')

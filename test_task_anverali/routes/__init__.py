@@ -1,20 +1,18 @@
-import os
-
-import sentry_sdk
 from flasgger import Swagger
 from flask import Flask
 from flask_admin import Admin
 from flask_login import LoginManager
 
+from test_task_anverali.admin.views.admin_index import AdminHomeView
+from test_task_anverali.admin.views.role import RoleView, UserRoleView
+from test_task_anverali.admin.views.user import UserView
 from test_task_anverali.conf import config
 from test_task_anverali.db import Session
-from test_task_anverali.models.user import User, UserRole
-from test_task_anverali.models.roles import Role
+from test_task_anverali.models.user import User
 from test_task_anverali.routes.auth import auth_bp
 from test_task_anverali.routes.home import main_bp
 from test_task_anverali.routes.user import user_bp
 from test_task_anverali.routes.profile import profile_bp
-from test_task_anverali.admin.user import CustomAdminView
 
 
 app = Flask(__name__)
@@ -30,13 +28,17 @@ swagger = Swagger(app, template={
     'schemes': ['http']
 })
 app.config['SECRET_KEY'] = config.SECRET_KEY
-app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
+app.config['DEBUG'] = config.DEBUG
 
-admin = Admin(app, name='freelance', template_mode='bootstrap4')
-admin.add_view(CustomAdminView(User, Session()))
-admin.add_view(CustomAdminView(Role, Session()))
-admin.add_view(CustomAdminView(UserRole, Session()))
+admin = Admin(
+    app,
+    name='freelance',
+    index_view=AdminHomeView(),
+)
 
+admin.add_view(RoleView(Session()))
+admin.add_view(UserRoleView(Session()))
+admin.add_view(UserView(Session()))
 
 login_manager = LoginManager(app)
 

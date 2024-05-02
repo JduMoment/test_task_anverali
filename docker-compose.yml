@@ -1,13 +1,23 @@
 version: '3.8'
 services:
   postgres:
-    env_file: .database.env
+    env_file: .env.database
     image: postgres:13.3-alpine
     volumes:
       - postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/app
 
   opensearch:
     image: opensearchproject/opensearch:latest
@@ -30,8 +40,6 @@ services:
       - opensearch-data:/usr/share/opensearch/data
     ports:
       - "9200:9200"
-    networks:
-      - opensearch-net
 
   opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:latest
@@ -43,14 +51,8 @@ services:
     environment:
       - OPENSEARCH_HOSTS=http://opensearch:9200
       - DISABLE_SECURITY_DASHBOARDS_PLUGIN=true
-    networks:
-      - opensearch-net
 
 
 volumes:
   postgres-data:
   opensearch-data:
-
-
-networks:
-  opensearch-net:

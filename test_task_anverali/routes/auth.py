@@ -1,11 +1,15 @@
-import hashlib
+import logging
 
 import flask_login
 from flask import render_template, flash, url_for, redirect, Blueprint, request
 from flask_login import login_user
+from marshmallow import ValidationError
 
 from test_task_anverali.db import db_session
 from test_task_anverali.models.user import User
+from test_task_anverali.routes.schemas import LoginSchema
+
+logger = logging.getLogger('opensearch')
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -51,18 +55,27 @@ def login():
                 description: Data validation failed.
     """
     try:
-        email = request.form['email']
-        password = request.form['password']
+        validated_data = LoginSchema().load(request.form)
+        email = validated_data['email']
+        password = validated_data['password']
         with db_session() as session:
             user = session.query(User).filter_by(email=email).first()
-            if user and user.password == hashlib.sha256(password.encode()).hexdigest():
+            if user and user.check_pwd(password):
                 login_user(user)
                 flash('Login successful', 'success')
                 return redirect(url_for('main.index')), 302
             else:
                 flash('Invalid email or password', 'danger')
                 return render_template('login.html'), 400
+    except ValidationError as e:
+        if 'email' in e.messages:
+            flash('Email validation failed', 'danger')
+        if 'password' in e.messages:
+            flash('Password validation failed', 'danger')
+        return render_template('login.html'), 422
+
     except Exception as error:
+        logger.error('Error during login: %s', error, exc_info=True)
         flash('Data validation failed', 'danger')
         return render_template('login.html'), 400
 

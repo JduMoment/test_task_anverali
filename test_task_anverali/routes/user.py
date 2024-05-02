@@ -1,10 +1,13 @@
-import hashlib
+import logging
 
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from marshmallow import ValidationError
 
-from test_task_anverali.libs.core import add_user
+from test_task_anverali.db import db_session
+from test_task_anverali.libs.db_requests import register_user
 from test_task_anverali.routes.schemas import RegisterSchema
+
+logger = logging.getLogger('opensearch')
 
 user_bp = Blueprint('users', __name__)
 
@@ -52,10 +55,8 @@ def register():
         schema = RegisterSchema()
         validated_data = schema.load(user_data)
 
-        password = validated_data.get('password')
-        hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        args = {**request.form, 'password': hashed_password}
-        add_user(**args)
+        with db_session() as session:
+            register_user(session, validated_data)
         flash('Registration has been completed successfully', 'success')
         return redirect(url_for('auth.login')), 302
     except ValidationError as e:
@@ -65,6 +66,7 @@ def register():
             flash('Password validation failed', 'danger')
         return render_template('registration.html', errors=e.messages), 400
     except Exception as error:
+        logger.error('Error during registration %s', error, exc_info=True)
         flash('Something went wrong', 'danger')
         return render_template('base.html', errors=error), 500
 

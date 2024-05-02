@@ -3,11 +3,17 @@ import os
 from logging.config import dictConfig
 
 import sentry_sdk
+from dotenv import load_dotenv
 from opensearch_logger import OpenSearchHandler
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.logging import LoggingIntegration
 
 from test_task_anverali.conf.dev import DevelopmentConfig
+from test_task_anverali.conf.logs import ExcludeBulkLogsFilter
+
+
+load_dotenv()
+
 
 LOGGING_CONFIG = {
     'disable_existing_loggers': False,
@@ -23,13 +29,19 @@ LOGGING_CONFIG = {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'json',
+            'filters': ['exclude_bulk_logs'],
+        },
+    },
+    'filters': {
+        'exclude_bulk_logs': {
+            '()': ExcludeBulkLogsFilter,
         },
     },
     'loggers': {
         '': {
             'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
+            'level': 'INFO',
+            'propagate': False,
         },
     },
 }
@@ -68,6 +80,7 @@ def setup_opensearch(node_config):
 def get_config():
     config_map = {
         'development': DevelopmentConfig,
+        'tests': DevelopmentConfig,
     }
 
     environment = os.getenv('NODE_ENV', 'development')
