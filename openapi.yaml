@@ -1,0 +1,108 @@
+info:
+    title: Freelance API
+    version: 1.0.0
+    description: API for freelance project
+paths:
+    /:
+        get:
+            responses:
+                200:
+                    description: Returns the rendered default.html template.
+    /register:
+        get:
+            responses:
+                200:
+                    description: Returns the rendered register.html template.
+        post:
+            consumes:
+                - application/x-www-form-urlencoded
+                parameters:
+                    -   in: formData
+                        name: email
+                        type: string
+                        required: true
+                        description: The user's email address.
+                    -   in: formData
+                        name: password
+                        type: string
+                        required: true
+                        description: The user's password that must include at least one number and has a minimum length of 6 characters.
+            responses:
+                302:
+                    description: Redirect to home page if registration successful.
+                400:
+                    description: Render registration form with error message if registration fails.
+                500:
+                    description: Render home page if registration fails.
+    /login:
+        get:
+            responses:
+                200:
+                    description: Render and show the login form.
+        post:
+            consumes:
+                - application/x-www-form-urlencoded
+                parameters:
+                    -   in: formData
+                        name: email
+                        type: string
+                        required: true
+                        description: The user's email address.
+                    -   in: formData
+                        name: password
+                        type: string
+                        required: true
+                        description: The user's password.
+            responses:
+                200:
+                    description: Render login form with error message if login fails.
+                302:
+                    description: Redirect to home page if login successful.
+                422:
+                    description: Data validation failed.
+                500:
+                    description: Render home page if login fails.
+    /logout:
+        post:
+            responses:
+                302:
+                    description: Redirect to home page if logout successful.
+    /profile:
+        get:
+            responses:
+                200:
+                    description: Render and show the profile page depending on the type of account the customer or the contractor.
+                500:
+                    description: Render home page if profile fails.
+        post:
+            responses:
+                302: Change account type if successful.
+    /profile/update:
+        post:
+            consumes:
+                customer:
+                    - application/x-www-form-urlencoded
+                    parameters:
+                        -   in: formData
+                            name: about
+                            type: string
+                            required: true
+                            description: Description of the user.
+                executor:
+                    - application/x-www-form-urlencoded
+                    parameters:
+                        -   in: formData
+                            name: about
+                            type: string
+                            required: true
+                            description: Description of the user.
+                        -   in: formData
+                            name: experience
+                            type: string
+                            required: true
+                            description: User experience.
+            responses:
+                302:
+                    description: Redirect to profile page if update successful.
+                500:
+                    description: Render home page if update fails.

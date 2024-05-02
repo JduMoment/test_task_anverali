@@ -50,9 +50,8 @@ def update_profile():
                 about=request.form.get('about')
             )
         flash('Profile has been updated successfully', 'success')
-        redirect(url_for('profile.profile')), 302
+        return redirect(url_for('profile.profile')), 302
     except Exception as error:
         logger.error('Error while getting user profile data: %s', error, exc_info=True)
         flash('Something went wrong. Please, try again.', 'danger')
         return render_template('base.html'), 500
-    return redirect(url_for('profile.profile')), 302

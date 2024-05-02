@@ -64,9 +64,6 @@ def login():
                 login_user(user)
                 flash('Login successful', 'success')
                 return redirect(url_for('main.index')), 302
-            else:
-                flash('Invalid email or password', 'danger')
-                return render_template('login.html'), 400
     except ValidationError as e:
         if 'email' in e.messages:
             flash('Email validation failed', 'danger')
@@ -77,7 +74,7 @@ def login():
     except Exception as error:
         logger.error('Error during login: %s', error, exc_info=True)
         flash('Data validation failed', 'danger')
-        return render_template('login.html'), 400
+        return render_template('login.html'), 500
 
 
 @auth_bp.post('/logout')
