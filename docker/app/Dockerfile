@@ -6,8 +6,6 @@ COPY poetry.lock pyproject.toml /app/
 
 RUN pip install poetry
 
-RUN poetry lock --no-update
-
 RUN poetry install
 
 COPY . /app/
@@ -15,7 +13,5 @@ COPY . /app/
 ENV FLASK_APP=main.py
 
 EXPOSE 8080
-
-RUN pip install flask
 
 CMD ["poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=8080", "--debug"]

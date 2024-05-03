@@ -1,4 +1,3 @@
-from flasgger import Swagger
 from flask import Flask
 from flask_admin import Admin
 from flask_login import LoginManager
@@ -17,16 +16,6 @@ from test_task_anverali.routes.profile import profile_bp
 
 app = Flask(__name__)
 
-swagger = Swagger(app, template={
-    'swagger': '2.0',
-    'info': {
-        'title': 'Freelance',
-        'version': '1.0',
-        'description': 'Freelance service'
-    },
-    'basePath': '/',
-    'schemes': ['http']
-})
 app.config['SECRET_KEY'] = config.SECRET_KEY
 app.config['DEBUG'] = config.DEBUG
 
