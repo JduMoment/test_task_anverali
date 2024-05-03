@@ -1,6 +1,6 @@
 import pytest
 
-from test_task_anverali.libs.core import register_user
+from test_task_anverali.libs.db_requests import register_user
 from test_task_anverali.models.user import User
 
 

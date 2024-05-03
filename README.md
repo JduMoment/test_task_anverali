@@ -33,8 +33,6 @@ To test the web application locally, follow these steps:
 1. Clone or extract project and open directory `test_task_anverali`.
 2. Make a copy of the `.env.database.example` file and rename it to `.env.database`.
 3. Make a copy of the `.env.example` file and rename it to `.env`.
-4. Install all the dependencies using the `make install` command.
-5. Edit the `DATABASE_URL` variable in the `.env` file with your PostgreSQL database credentials.
-6. Run `sudo docker-compose build` in the terminal.
-7. Run `sudo docker-compose up` in the terminal to start the application.
-8. To stop the application, run `sudo docker-compose down`.
+4. Run `sudo docker-compose build` in the terminal.
+5. Run `sudo docker-compose up` in the terminal to start the application.
+6. To stop the application, run `sudo docker-compose down`.
