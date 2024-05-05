@@ -30,9 +30,20 @@ You must first install docker-compose and poetry.
 
 To test the web application locally, follow these steps:
 
-1. Clone or extract project and open directory `test_task_anverali`.
-2. Make a copy of the `.env.database.example` file and rename it to `.env.database`.
-3. Make a copy of the `.env.example` file and rename it to `.env`.
-4. Run `sudo docker-compose build` in the terminal.
-5. Run `sudo docker-compose up` in the terminal to start the application.
-6. To stop the application, run `sudo docker-compose down`.
+1. Clone or extract project.
+2. Make a copy of the **.env.database.example** file and rename it to **.env.database**.
+    ```bash
+    cp .env.database.example .env.database
+
+3. Make a copy of the **.env.example** file and rename it to **.env**.
+   ```bash
+    cp .env.database.example .env.database
+
+4. Build and run docker
+    ```bash
+    docker-compose build
+    docker-compose up
+
+5. 
+
+

@@ -27,7 +27,7 @@ def profile():
                                                                space_type=space_type)), 200
         except Exception as error:
             logger.error('Error while getting user profile data: %s', error, exc_info=True)
-            flash('Something went wrong. Please, try again.', 'danger')
+            flash('Что-то пошло не так. Пожалуйста, попробуйте еще раз.', 'danger')
             return render_template('base.html'), 500
 
 
@@ -35,6 +35,7 @@ def profile():
 def change_role():
     with db_session() as session:
         change_space_type(session, current_user.id, current_user.space_type)
+    flash('Тип профиля изменен', 'success')
     return redirect(url_for('profile.profile')), 302
 
 
@@ -51,9 +52,9 @@ def update_profile():
                 experience=request.form.get('experience'),
                 about=request.form.get('about')
             )
-        flash('Profile has been updated successfully', 'success')
+        flash('Данные профиля обновлены', 'success')
         return redirect(url_for('profile.profile')), 302
     except Exception as error:
         logger.error('Error while getting user profile data: %s', error, exc_info=True)
-        flash('Something went wrong. Please, try again.', 'danger')
+        flash('Что-то пошло не так. Пожалуйста, попробуйте еще раз.', 'danger')
         return render_template('base.html'), 500

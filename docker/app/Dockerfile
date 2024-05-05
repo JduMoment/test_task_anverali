@@ -6,6 +6,8 @@ COPY poetry.lock pyproject.toml /app/
 
 RUN pip install poetry
 
+RUN poetry config virtualenvs.create false
+
 RUN poetry install
 
 COPY . /app/
@@ -14,4 +16,4 @@ ENV FLASK_APP=main.py
 
 EXPOSE 8080
 
-CMD ["poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=8080", "--debug"]
+CMD alembic upgrade head && python main.py

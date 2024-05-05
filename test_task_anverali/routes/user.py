@@ -26,15 +26,15 @@ def register():
 
         with db_session() as session:
             register_user(session, validated_data)
-        flash('Registration has been completed successfully', 'success')
+        flash('Регистрация прошла успешно', 'success')
         return redirect(url_for('auth.login')), 302
     except ValidationError as e:
         if 'email' in e.messages:
-            flash('Email validation failed', 'danger')
+            flash('Некорректная почта', 'danger')
         if 'password' in e.messages:
-            flash('Password validation failed', 'danger')
+            flash('Некорректный пароль', 'danger')
         return render_template('registration.html', errors=e.messages), 400
     except Exception as error:
         logger.error('Error during registration %s', error, exc_info=True)
-        flash('Something went wrong', 'danger')
+        flash('Что-то пошло не так. Пожалуйста, попробуйте еще раз', 'danger')
         return render_template('base.html', errors=error), 500
