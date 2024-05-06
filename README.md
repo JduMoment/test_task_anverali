@@ -37,7 +37,7 @@ To test the web application locally, follow these steps:
 
 3. Make a copy of the **.env.example** file and rename it to **.env**.
    ```bash
-    cp .env.database.example .env.database
+    cp .env.example .env
 
 4. Build and run docker
     ```bash
