@@ -44,6 +44,8 @@ To test the web application locally, follow these steps:
     docker-compose build
     docker-compose up
 
-5. 
+
+To access the admin panel, you need to follow the route **/admin**.
+Only the user has access to it **curagin.vanya@yandex.ru** with the password **321321**.
 
 
